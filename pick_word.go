@@ -24,13 +24,13 @@ var keywordsPV = make(map[string]int)
 
 func PickWord(siteUrl string, seedWords []string) {
 	//siteUrl := "http://www.szchenxing.cn/"
-	si, err := goThoughtSite(siteUrl, 1000, sitethrougher.PortPC, "./data/selectWords/")
+	si, err := goThoughtSite(siteUrl, 500, sitethrougher.PortPC, "./")
 	if err != nil {
 		panic(err)
 	}
 	es := apiUtil.NewQueryExpandService(ePAuthHeader)
 
-	r, err := os.Create("./data/selectWords/r1.csv")
+	r, err := os.Create("r1.csv")
 	if err != nil {
 		panic(err)
 	}
@@ -122,9 +122,9 @@ func goThoughtSite(siteURLRaw string, limitCount int, port sitethrougher.DeviceP
 	//remove path date
 	pathRoads := strings.Split(cachePath, "/")
 	if strings.HasSuffix(cachePath, "/") {
-		pathRoads = pathRoads[0 : len(pathRoads)-2]
-	} else {
 		pathRoads = pathRoads[0 : len(pathRoads)-1]
+	} else {
+		pathRoads = pathRoads[0:len(pathRoads)]
 	}
 	return siteinfocrawler.RunSiteWithCache(siteURLRaw, strings.Join(pathRoads, "/"), 24, myOption)
 }
