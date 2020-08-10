@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package fengchao_rpc;
+
+
+message WordInfo {
+    string word = 1;
+    int32 pc_pv = 2;
+    int32 mobile_pv = 3;
+    int32 competition = 4;
+    float rec_bid = 5;
+
+}
+
+message WordExpand {
+    string main_word = 1;
+    repeated WordInfo word_infos = 2;
+}
+
+message QueryRequest {
+    repeated string words = 1;
+}
+
+message QueryResponse {
+    repeated WordInfo word_infos = 1;
+}
+
+message ExpandRequest {
+    string word = 1;
+}
+
+message ExpandResponse {
+    WordExpand word_expand = 1;
+}
+
+service FengchaoService {
+    rpc Query (QueryRequest) returns (QueryResponse) {
+    }
+    rpc Expand (ExpandRequest) returns (ExpandResponse) {
+    }
+
+}
